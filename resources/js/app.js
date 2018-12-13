@@ -6,8 +6,12 @@
  */
 
 require('./bootstrap');
+require('materialize-css');
 
 window.Vue = require('vue');
+
+import VueQRCodeComponent from 'vue-qrcode-component'
+Vue.component('qr-code', VueQRCodeComponent)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -17,6 +21,8 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
-const app = new Vue({
-    el: '#app'
-});
+document.addEventListener('DOMContentLoaded', () => {
+    const app = new Vue({
+        el: '#app'
+    })
+})
