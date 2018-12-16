@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Socialite;
+use App\User;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -27,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -55,8 +57,26 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('github')->user();
+        $github_user = Socialite::driver('github')->user();
+        $user = $this->userFindOrCreate($github_user);
+        
+        Auth::login($user, true);
+        //print_r($user);
 
-        // $user->token;
+        return redirect($this->redirectTo);
+    }
+
+    public function userFindOrCreate($github_user) {
+        $user = User::where('oauth_token', $github_user->id)->first();
+        
+        if(!$user){
+            $user = new User;
+            $user->name = $github_user->getName();
+            $user->email = $github_user->getEmail();
+            $user->oauth_token = $github_user->getid();
+            $user->save();
+        }
+        
+        return $user;
     }
 }

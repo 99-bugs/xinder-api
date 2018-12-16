@@ -10,6 +10,7 @@
     <body>
         <div class="container" id="app">
             <h1>Xinder</h1>
+            <a class="btn" href="/login/github">Login with GitHub</a>
             <qr-code text="Text to encode"></qr-code>
         </div>
     </body>
