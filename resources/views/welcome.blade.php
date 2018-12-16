@@ -10,7 +10,19 @@
     <body>
         <div class="container" id="app">
             <h1>Xinder</h1>
-            <a class="btn" href="/login/github">Login with GitHub</a>
+            <p></p>
+
+                @guest
+                    <p>
+                        <a class="btn" href="/login/github">Login with GitHub</a>
+                    </p>
+                @else
+                    <p>
+                        Welcome: {{{ Auth::user()->name }}} <br>
+                        <a class="btn" href="/logout">Logout</a>
+                    </p>
+                @endguest
+
             <qr-code text="Text to encode"></qr-code>
         </div>
     </body>
