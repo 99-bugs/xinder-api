@@ -76,7 +76,12 @@ class LoginController extends Controller
             $user->oauth_token = $github_user->getid();
             $user->save();
         }
-        
+
         return $user;
+    }
+
+    public function logout() {
+        Auth::logout();
+        return redirect($this->redirectTo);
     }
 }
